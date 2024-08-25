@@ -106,3 +106,16 @@ button:hover {
 .modal button:hover {
     background-color: #45a049;
 }
+/* Estilo para o botão quando desabilitado */
+button:disabled {
+    background-color: #d3d3d3; /* Cinza esmaecido */
+    color: #808080; /* Texto cinza escuro */
+    cursor: not-allowed; /* Cursor indicando que não é clicável */
+}
+
+/* Estilo para o botão quando habilitado */
+button:enabled {
+    background-color: #28a745; /* Verde */
+    color: white; /* Texto branco */
+    cursor: pointer; /* Cursor indicando que é clicável */
+}
