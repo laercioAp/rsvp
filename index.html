@@ -3,49 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP</title>
+    <title>Confirmação de Presença</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Confirmação de Presença (RSVP)</h1>
+        <h1>Confirmação de Presença</h1>
         <p>Por favor, preencha o formulário abaixo para confirmar sua presença:</p>
         <form id="rsvp-form">
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="nome" required>
-            
-            <label for="phone">Telefone:</label>
-            <input type="tel" id="phone" name="telefone" required>
-            
-            <label for="attendance">Você irá comparecer?</label>
-            <select id="attendance" name="comparece" required>
-                <option value="">Selecione uma opção</option>
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
-            </select>
-            
-            <label for="children-count">Quantidade de acompanhantes:</label>
-            <input type="number" id="children-count" name="acompanhantes" min="0" required>
-            
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Telefone:</label>
+                <input type="tel" id="phone" name="telefone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="attendance">Você irá comparecer?</label>
+                <select id="attendance" name="comparece" required>
+                    <option value="">Selecione uma opção</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="children-count">Quantidade de acompanhantes (maiores de 12 anos):</label>
+                <input type="number" id="children-count" name="acompanhantes" min="0" required>
+            </div>
+
             <div id="children-details"></div>
 
-            <label for="has-children">Você possui filhos?</label>
-            <select id="has-children" name="tem_filhos" required>
-                <option value="">Selecione uma opção</option>
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
-            </select>
-            
-            <div id="children-section" style="display:none;">
-                <label for="children-count">Quantidade de filhos:</label>
-                <input type="number" id="children-count" name="quantidade_filhos" min="1">
+            <div class="form-group">
+                <label for="message">Mensagem (opcional):</label>
+                <textarea id="message" name="mensagem" rows="4"></textarea>
             </div>
-            
-            <label for="message">Mensagem (opcional):</label>
-            <textarea id="message" name="mensagem" rows="4"></textarea>
-            
+
             <button type="submit">Enviar</button>
         </form>
     </div>
@@ -54,7 +52,7 @@
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="modal-icon">&#10004;</div> <!-- Ícone de sucesso -->
+            <div class="modal-icon">&#10004;</div>
             <p>Formulário enviado com sucesso!</p>
             <button onclick="document.getElementById('successModal').style.display='none'">Fechar</button>
         </div>

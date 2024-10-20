@@ -1,26 +1,35 @@
+/* Imagem de fundo esmaecida */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: url('assets/couple-4.jpg') no-repeat 30% center; /* Ajustar a posição da imagem de fundo */
+    background-size: cover;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Esmaecer o fundo */
 }
 
+/* Container destacado com fundo branco esmaecido */
 .container {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     max-width: 500px;
     width: 100%;
     text-align: center;
+    box-sizing: border-box;
+    z-index: 1;
 }
 
+/* Ajuste de cores e fontes para legibilidade */
 h1 {
     color: #333;
+    font-size: 2rem;
 }
 
 form {
@@ -31,14 +40,15 @@ form {
 label {
     margin: 10px 0 5px;
     text-align: left;
+    color: #333;
 }
 
 input, select, textarea {
+    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
     box-sizing: border-box;
 }
 
@@ -48,19 +58,20 @@ button {
     border-radius: 5px;
     background-color: #5cb85c;
     color: white;
-    font-size: 16px;
+    font-size: 1.1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #4cae4c;
 }
 
-/* Estilo do modal */
+/* Modal e fundo */
 .modal {
-    display: none; /* Escondido por padrão */
+    display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
@@ -79,7 +90,7 @@ button:hover {
     max-width: 400px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .close {
@@ -89,8 +100,7 @@ button:hover {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.close:hover, .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -98,7 +108,7 @@ button:hover {
 
 .modal-icon {
     font-size: 50px;
-    color: #4CAF50; /* Verde de sucesso */
+    color: #4CAF50;
 }
 
 .modal p {
@@ -111,7 +121,7 @@ button:hover {
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     border-radius: 5px;
 }
@@ -120,32 +130,15 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Estilo para o botão quando desabilitado */
-button:disabled {
-    background-color: #d3d3d3; /* Cinza esmaecido */
-    color: #808080; /* Texto cinza escuro */
-    cursor: not-allowed; /* Cursor indicando que não é clicável */
-}
-
-/* Estilo para o botão quando habilitado */
-button:enabled {
-    background-color: #28a745; /* Verde */
-    color: white; /* Texto branco */
-    cursor: pointer; /* Cursor indicando que é clicável */
-}
-
-/* Media Queries para responsividade */
-
-/* Ajuste para tablets e dispositivos menores */
+/* Ajustes responsivos */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
     }
 
     button {
-        width: 100%;
-        font-size: 14px;
-        padding: 12px;
+        font-size: 1rem;
+        padding: 10px;
     }
 
     .modal-content {
@@ -162,18 +155,17 @@ button:enabled {
     }
 }
 
-/* Ajuste para smartphones */
 @media (max-width: 480px) {
     h1 {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 
     input, select, textarea {
-        font-size: 14px;
+        font-size: 0.9rem;
     }
 
     button {
-        font-size: 14px;
+        font-size: 0.9rem;
         padding: 10px;
     }
 

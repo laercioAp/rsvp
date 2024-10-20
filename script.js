@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const phoneInput = document.getElementById('phone');
-    const childrenCountInput = document.getElementById('children-count');
-    const childrenDetailsContainer = document.getElementById('children-details');
+    const childrenCountInput = document.getElementById('children-count');  // Input para quantidade de acompanhantes
+    const childrenDetailsContainer = document.getElementById('children-details');  // Container para inputs dinâmicos dos acompanhantes
     const successModal = document.getElementById('successModal');
     const closeModal = document.querySelector('.close');
     const rsvpForm = document.getElementById('rsvp-form');
     const submitButton = rsvpForm.querySelector('button[type="submit"]');
-    const hasChildrenSelect = document.getElementById('has-children');
-    const childrenSection = document.getElementById('children-section');
 
     // Inicialmente, o botão de submit está desabilitado
     submitButton.disabled = true;
@@ -22,42 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para verificar se os campos obrigatórios estão preenchidos
     const checkFormValidity = () => {
         const nameInput = document.getElementById('name').value.trim();
-        const phoneInput = document.getElementById('phone').value.trim();
+        const phoneInputVal = document.getElementById('phone').value.trim();
         const attendanceInput = document.getElementById('attendance').value.trim();
-        const childrenCount = parseInt(childrenCountInput.value, 10);
-
-        let allChildrenNamesFilled = true;
-        
+        const accompCount = parseInt(childrenCountInput.value, 10) || 0;  // Garantir que seja um número, mesmo vazio
+    
+        let allAccompNamesFilled = true;
+    
         // Se houver acompanhantes, verificar se todos os nomes foram preenchidos
-        if (childrenCount > 0) {
-            for (let i = 0; i < childrenCount; i++) {
-                const childNameInput = document.querySelector(`input[name="acompanhante_nome_${i + 1}"]`);
-                if (!childNameInput || !childNameInput.value.trim()) {
-                    allChildrenNamesFilled = false;
+        if (accompCount > 0) {
+            for (let i = 0; i < accompCount; i++) {
+                const accompNameInput = document.querySelector(`input[name="acompanhante_nome_${i + 1}"]`);
+                if (!accompNameInput || !accompNameInput.value.trim()) {
+                    allAccompNamesFilled = false;
                     break;
                 }
             }
         }
-
-        const isValid = nameInput && phoneInput && attendanceInput && (childrenCount === 0 || allChildrenNamesFilled);
-
-        submitButton.disabled = !isValid;
+    
+        // Verifica se todos os campos obrigatórios foram preenchidos corretamente
+        const isValid = nameInput && phoneInputVal && attendanceInput === "Sim" && (accompCount === 0 || allAccompNamesFilled);
+    
+        submitButton.disabled = !isValid;  // Habilitar ou desabilitar o botão com base na validade
     };
-
-    // Função para mostrar ou esconder o campo de quantidade de filhos
-    const toggleChildrenSection = () => {
-        if (hasChildrenSelect.value === 'Sim') {
-            childrenSection.style.display = 'block';  // Mostra a seção de filhos
-        } else {
-            childrenSection.style.display = 'none';  // Esconde a seção de filhos
-            childrenCountInput.value = '';  // Limpa o valor do input de quantidade de filhos
-            childrenDetailsContainer.innerHTML = ''; // Limpa os detalhes dos filhos se escondido
-        }
-        checkFormValidity(); // Verificar a validade do formulário após ocultar/mostrar a seção
-    };
-
-    // Adiciona um event listener para mudanças na seleção de "Você possui filhos?"
-    hasChildrenSelect.addEventListener('change', toggleChildrenSection);
+    
 
     // Adiciona event listeners para os campos do formulário
     const formElements = rsvpForm.querySelectorAll('input, select');
@@ -65,29 +50,33 @@ document.addEventListener('DOMContentLoaded', () => {
         element.addEventListener('input', checkFormValidity);
     });
 
+    // Função para gerar campos de nomes dos acompanhantes com base na quantidade informada
     childrenCountInput.addEventListener('input', (event) => {
         const count = parseInt(event.target.value, 10);
-        childrenDetailsContainer.innerHTML = '';
+        childrenDetailsContainer.innerHTML = '';  // Limpa os inputs anteriores
 
-        for (let i = 0; i < count; i++) {
-            const nameLabel = document.createElement('label');
-            nameLabel.textContent = `Nome do acompanhante ${i + 1}:`;
-            const nameInput = document.createElement('input');
-            nameInput.type = 'text';
-            nameInput.name = `acompanhante_nome_${i + 1}`;
-            nameInput.required = true;
+        if (count > 0) {
+            for (let i = 0; i < count; i++) {
+                const nameLabel = document.createElement('label');
+                nameLabel.textContent = `Nome do acompanhante ${i + 1}:`;
+                const nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.name = `acompanhante_nome_${i + 1}`;
+                nameInput.required = true;
 
-            childrenDetailsContainer.appendChild(nameLabel);
-            childrenDetailsContainer.appendChild(nameInput);
+                childrenDetailsContainer.appendChild(nameLabel);
+                childrenDetailsContainer.appendChild(nameInput);
 
-            // Adiciona listener para os novos campos de nome de acompanhante
-            nameInput.addEventListener('input', checkFormValidity);
+                // Adiciona listener para os novos campos de nome de acompanhante
+                nameInput.addEventListener('input', checkFormValidity);
+            }
         }
 
         // Verificar a validade do formulário novamente após adicionar novos campos
         checkFormValidity();
     });
 
+    // Função de envio do formulário
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -118,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Limpa os campos do formulário
             rsvpForm.reset();
             submitButton.disabled = true;  // Desabilitar o botão após o reset
+            childrenDetailsContainer.innerHTML = '';  // Limpa os campos de acompanhantes
         })
         .catch(error => {
             console.error('Erro:', error);
@@ -138,6 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Verificar a visibilidade da seção de filhos ao carregar a página
-    toggleChildrenSection();
+    // Verificação inicial do formulário
+    checkFormValidity();
 });
